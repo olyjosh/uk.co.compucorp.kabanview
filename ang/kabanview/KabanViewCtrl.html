@@ -1,0 +1,57 @@
+<!--<link rel="stylesheet" type="text/css" href="bootstrap.min.css" xmlns="http://www.w3.org/1999/html">-->
+<!--<link rel="stylesheet" type="text/css" href="kabanview.css" xmlns="http://www.w3.org/1999/html">-->
+
+<div class="crm-container align-content-center">
+
+
+  <div>
+    <input type="search" placeholder="Filter by status">
+  </div>
+  <div class="row">
+       <!--The end of the begining -->
+    <!--{{cases}}-->
+
+
+    <div class="card col-md-3" ng-repeat="ca in cases">
+      <div class="card-header card-warning">
+        Case Status ID {{ca.status_id}}
+
+      </div>
+      <div class="card-block" data-drop="true" ng-model='ca.list' jqyoui-droppable="{multiple:true, onDrop : 'updateStatus'}">
+
+        <div class="card" ng-repeat="item in ca.list" ng-init="contactId=item.contact_id['1']; ownerId=item.client_id['1'];"
+             ng-show="true" data-drag="true" data-jqyoui-options="{revert: 'invalid', id :item.id }" ng-model="ca.list"
+             jqyoui-draggable="{index: {{$index}},animate:true }">
+          <div class="card-block">
+            <!--<h4 class="card-title">Card title</h4>-->
+            <div class="row">
+              <div class="col-md-4">
+                <img class="img-thumbnail img-fluid"  src="/avata.png" alt="image">
+              </div>
+              <div class="col-md-8 noLeftMargin">
+                <span> <h3>Case ID:<a href="http://localhost/drupal/civicrm/case/activity/view?cid=3&aid=1">{{item.id}}</a></h3></span>
+                <span> <h3>{{caseContacts[contactId].first_name +" "+caseContacts[contactId].last_name}}</h3> </span>
+                <span><h2>Owner: <a href={{"/civicrm/contact/view?reset=1&cid="+ownerId}}>
+                  {{caseContacts[ownerId].first_name +" "+caseContacts[ownerId].last_name}}</a></h2></span>
+              </div>
+            </div>
+            <div data-drop="true">
+              <div class="hr"></div>
+              <span>No. of Activities:<a href="http://localhost/drupal/civicrm/case/activity/view?cid=3&aid=1"> {{item.actCount}}</a></span><br>
+              <span>Case open date : {{item.start_date | date:'dd/MM/yyyy'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="wrapper">
+          <div class="tooltip">Total Expectation</div>
+          <small class="text-muted">No of cases : {{ca.list.length}}</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
